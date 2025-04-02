@@ -37,10 +37,11 @@ rules:
     ## Configure the integration in Cortex
 
     ### Gotchas
-    - Don't copy the OKTA URL from the browser.    It should not contain the string "-admin".  Get it from https://bit.ly/finding-okta-domain.
-        ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/domain.png)
+    - Don't copy the OKTA URL from the browser.    It should not contain the string "-admin".  For more details, go to https://bit.ly/finding-okta-domain.
+    ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/domain.png)
     - I wasn't prompted to define any scopes for the API token and didn't define any.
     - I really don't know what group types are and didn't define any when defining the integration in Cortex.
+        ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/cortex-integration.png)
 
     # Related Cortex Academy courses
     None
