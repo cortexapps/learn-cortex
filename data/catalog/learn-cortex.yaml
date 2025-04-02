@@ -1,0 +1,8 @@
+openapi: 3.0.1
+info:
+  title: Learn Cortex
+  description: An entity designed to help you learn about Cortex.
+  x-cortex-tag: learn-cortex
+  x-cortex-type: service
+  x-cortex-groups:
+  - learn-cortex
