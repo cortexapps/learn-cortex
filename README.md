@@ -14,5 +14,11 @@ the directions listed below.
 - run `cortex backup import -d data`
 
 # The Learn Cortex entity
-You will now have an entity named Learn Cortex in your catalog.  Click on the 'Learn Okta' scorecard and expand the failing Scorecard rule
+You will now have an entity named Learn Cortex in your catalog. 
+
+![image](./img/learn-cortex-entity.png)
+
+Click on the 'Learn Okta' scorecard and expand the failing Scorecard rule
 to see instructions on how to set up a dev instance of Okta.
+
+![image](./img/learn-okta-scorecard.png)
