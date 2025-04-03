@@ -11,6 +11,11 @@ the directions listed below.
 # Create Cortex entities
 - clone this repository on to your machine
 - cd to your clone directory
+- temporary workaround until I fix the CLI to allow partial imports:
+    ```
+    mkdir resource-definitions
+    mkdir teams
+    ```
 - run `cortex backup import -d data`
 
 # The Learn Cortex entity
