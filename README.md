@@ -13,8 +13,8 @@ the directions listed below.
 - cd to your clone directory
 - temporary workaround until I fix the CLI to allow partial imports:
     ```
-    mkdir resource-definitions
-    mkdir teams
+    mkdir data/resource-definitions
+    mkdir data/teams
     ```
 - run `cortex backup import -d data`
 
