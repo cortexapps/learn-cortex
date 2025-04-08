@@ -1,0 +1,155 @@
+{
+  "Report_Entry": [
+    {
+      "firstName": "Elliot",
+      "lastName": "Vance",
+      "managerEmail": "",
+      "manager": "",
+      "teamDisplayId": "ENG-VP",
+      "employeeId": "EV001",
+      "teamDisplayName": "Engineering (Elliot Vance)",
+      "email": "elliot.vance@example.com",
+      "employeeRole": "VP Engineering"
+    },
+    {
+      "firstName": "Dana",
+      "lastName": "Webb",
+      "managerEmail": "elliot.vance@example.com",
+      "manager": "Elliot Vance",
+      "teamDisplayId": "ENG-WEB",
+      "employeeId": "DW001",
+      "teamDisplayName": "Web Engineering (Dana Webb)",
+      "email": "dana.webb@example.com",
+      "employeeRole": "Director, Web Engineering",
+      "allSupervisoryOrganizationsManaged_group": [
+        {
+          "employeeSupervisoryOrgId": "ENG-WEB-TEAM",
+          "employeeSupervisoryOrgName": "Web Engineering Team (Dana Webb)",
+          "teamSupervisoryOrgId": "ENG-WEB",
+          "teamSupervisoryOrgName": "Web Engineering (Dana Webb)",
+          "teamSupervisoryOrgSuperiorId": "ENG-VP",
+          "teamSupervisoryOrgSuperiorName": "Engineering (Elliot Vance)"
+        }
+      ]
+    },
+    {
+      "firstName": "Alice",
+      "lastName": "Nguyen",
+      "managerEmail": "dana.webb@example.com",
+      "manager": "Dana Webb",
+      "teamDisplayId": "ENG-WEB-TEAM",
+      "employeeId": "AN001",
+      "teamDisplayName": "Web Engineering Team (Dana Webb)",
+      "email": "alice.nguyen@example.com",
+      "employeeRole": "Software Engineer"
+    },
+    {
+      "firstName": "Ben",
+      "lastName": "Chang",
+      "managerEmail": "dana.webb@example.com",
+      "manager": "Dana Webb",
+      "teamDisplayId": "ENG-WEB-TEAM",
+      "employeeId": "BC001",
+      "teamDisplayName": "Web Engineering Team (Dana Webb)",
+      "email": "ben.chang@example.com",
+      "employeeRole": "Frontend Developer"
+    },
+    {
+      "firstName": "Rachel",
+      "lastName": "King",
+      "managerEmail": "dana.webb@example.com",
+      "manager": "Dana Webb",
+      "teamDisplayId": "ENG-WEB-TEAM",
+      "employeeId": "RK001",
+      "teamDisplayName": "Web Engineering Team (Dana Webb)",
+      "email": "rachel.king@example.com",
+      "employeeRole": "QA Engineer"
+    },
+    {
+      "firstName": "Marcus",
+      "lastName": "Lee",
+      "managerEmail": "elliot.vance@example.com",
+      "manager": "Elliot Vance",
+      "teamDisplayId": "ENG-DATA",
+      "employeeId": "ML001",
+      "teamDisplayName": "Data Engineering (Marcus Lee)",
+      "email": "marcus.lee@example.com",
+      "employeeRole": "Director, Data Engineering",
+      "allSupervisoryOrganizationsManaged_group": [
+        {
+          "employeeSupervisoryOrgId": "ENG-DATA-TEAM",
+          "employeeSupervisoryOrgName": "Data Engineering Team (Marcus Lee)",
+          "teamSupervisoryOrgId": "ENG-DATA",
+          "teamSupervisoryOrgName": "Data Engineering (Marcus Lee)",
+          "teamSupervisoryOrgSuperiorId": "ENG-VP",
+          "teamSupervisoryOrgSuperiorName": "Engineering (Elliot Vance)"
+        }
+      ]
+    },
+    {
+      "firstName": "Nina",
+      "lastName": "Patel",
+      "managerEmail": "marcus.lee@example.com",
+      "manager": "Marcus Lee",
+      "teamDisplayId": "ENG-DATA-TEAM",
+      "employeeId": "NP001",
+      "teamDisplayName": "Data Engineering Team (Marcus Lee)",
+      "email": "nina.patel@example.com",
+      "employeeRole": "Data Engineer"
+    },
+    {
+      "firstName": "Omar",
+      "lastName": "Diaz",
+      "managerEmail": "marcus.lee@example.com",
+      "manager": "Marcus Lee",
+      "teamDisplayId": "ENG-DATA-TEAM",
+      "employeeId": "OD001",
+      "teamDisplayName": "Data Engineering Team (Marcus Lee)",
+      "email": "omar.diaz@example.com",
+      "employeeRole": "Data Analyst"
+    },
+    {
+      "firstName": "Tina",
+      "lastName": "Chen",
+      "managerEmail": "elliot.vance@example.com",
+      "manager": "Elliot Vance",
+      "teamDisplayId": "ENG-UI",
+      "employeeId": "TC001",
+      "teamDisplayName": "UI Engineering (Tina Chen)",
+      "email": "tina.chen@example.com",
+      "employeeRole": "Director, UI Engineering",
+      "allSupervisoryOrganizationsManaged_group": [
+        {
+          "employeeSupervisoryOrgId": "ENG-UI-TEAM",
+          "employeeSupervisoryOrgName": "UI Engineering Team (Tina Chen)",
+          "teamSupervisoryOrgId": "ENG-UI",
+          "teamSupervisoryOrgName": "UI Engineering (Tina Chen)",
+          "teamSupervisoryOrgSuperiorId": "ENG-VP",
+          "teamSupervisoryOrgSuperiorName": "Engineering (Elliot Vance)"
+        }
+      ]
+    },
+    {
+      "firstName": "Liam",
+      "lastName": "Morgan",
+      "managerEmail": "tina.chen@example.com",
+      "manager": "Tina Chen",
+      "teamDisplayId": "ENG-UI-TEAM",
+      "employeeId": "LM001",
+      "teamDisplayName": "UI Engineering Team (Tina Chen)",
+      "email": "liam.morgan@example.com",
+      "employeeRole": "UI/UX Designer"
+    },
+    {
+      "firstName": "Sophia",
+      "lastName": "Jenkins",
+      "managerEmail": "tina.chen@example.com",
+      "manager": "Tina Chen",
+      "teamDisplayId": "ENG-UI-TEAM",
+      "employeeId": "SJ001",
+      "teamDisplayName": "UI Engineering Team (Tina Chen)",
+      "email": "sophia.jenkins@example.com",
+      "employeeRole": "Frontend Engineer"
+    }
+  ]
+}
