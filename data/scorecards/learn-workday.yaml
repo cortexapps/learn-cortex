@@ -1,0 +1,98 @@
+tag: learn-workday
+name: Learn Workday
+description: |
+  Cortex Learn series: Set up and learn how to use the Workday integration.
+draft: false
+notifications:
+  enabled: false
+  scoreDropNotificationsEnabled: false
+exemptions:
+  enabled: false
+  autoApprove: false
+evaluation:
+  window: 168
+ladder:
+  name: Default Ladder
+  levels:
+  - name: Incomplete
+    rank: 1
+    color: "#FF9E9E"
+  - name: Completed
+    rank: 2
+    color: "#7CCB92"
+rules:
+- title: Learned
+  expression: ownership.allOwners().filter((member) => member.name.matchesIn("Sophia
+    Jenkins") and member.identityProviderSources.any(group=> group.source=="WORKDAY"
+    and group.groupIdentifier == "ENG-UI-TEAM")).length > 0
+  identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
+  weight: 1
+  level: Completed
+  failureMessage: |-
+    # About
+    This Scorecard walks you through setting up a mocked Workday integration.
+
+    The Workday integration uses basic authentication to pull a JSON-formatted Workday report and imports the team data into Cortex.
+
+    Since we don't have a test Workday instance, we use a mock created at https://designer.mocky.io/design.
+
+    There are some gaps in this course that have been identified in the TODO section below.  Updates from students encouraged and welcomed!
+
+    # Set up
+
+    ## Create the mock
+    Navigate to https://designer.mocky.io/design and paste the contents of https://github.com/cortexapps/learn-cortex/blob/main/data/workday/report.json into the HTTP Response body field.
+
+    ![mock definition](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/12umOkml/e154468c-3ee4-4630-88da-75109b5d31b3.jpg?source=viewer&v=7ddfa2a78abebf3a7361669f86ed229a)
+
+    Click on the "Generate HTTP Response" button to create the mock.
+
+    A URL will be generated.  The response from this URL will be the report you provided in the HTTP Response body field.
+
+    ![mock URL](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/kpurylxD/3efed6f6-d85b-4cf7-b024-40d0c2454249.jpg?source=viewer&v=97b096405c3977a8719d6da2f4af7255)
+
+    ## Configure the Workday integration
+
+    Follow at https://redesign-docs.cortex.io/ingesting-data-into-cortex/integrations/workday for configuring the integration.  *Note:* you will skip step 1 because your "report" will be returned by the mock endpoint.
+
+    *Screen shots that may be helpful when you configure the integration:*
+
+    *Employee Attributes*|
+    ![mapping fields](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/Kou5L1AP/8c5bf18f-d32f-46af-8ad0-2357746fc075.jpg?source=viewer&v=dc54d79dd6c1c3486da3b95ce0cd86cf)
+
+    *Team Attributes*
+
+    ![team attributes](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/E0uBlZyZ/b3995f26-fc81-4076-856b-c3e70008c1ec.jpg?source=viewer&v=66f6f1cdd97956321299faa11de11212)
+
+    *Hierarchy Fields*
+
+    ![hieararchy fields](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/GGu9L57B/02b24d6d-6077-43f5-ac0f-e9fa39032bc8.jpg?source=viewer&v=c7ef44e4755d3af6c13480e7c76a7d1b)
+
+    ## Gotchas
+    I think my Hiearchy Fields configuration is wrong.
+    ![config error](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/Wnu9wpKR/d64fd003-03ed-49fb-beb7-46936c5a26f6.jpg?source=viewer&v=3361e4885199533d2f0faa57b51df8f7)
+
+
+
+    # Related Cortex Academy courses
+    None
+
+    # Task
+    Follow the documentation at https://redesign-docs.cortex.io/ingesting-data-into-cortex/integrations/workday#manually-trigger-team-import to manually create the Cortex teams from the report.
+
+    One of the teams that gets created should have an x-cortex-tag of ui-engineering-team-tina-chen.
+
+    Make this team an owner of the "Learn Cortex" entity.
+
+    # TODO
+    Would be helpful to show how automatic sync works.  We could create an updated report with a user added and removed to show how the integration manages updates and how you can see the changes in the Audit logs.
+
+    I'm not sure if the team hierarchy is being imported correctly.  Would be good to walk through this example and verify the setup, perhaps as a secondary Learn Workday course.  The CQL rule could check for a valid parent of one of the child teams in the report.
+
+    # CQL Rule
+    The CQL rule for this Scorecard verifies that one of the teams from the mock Workday report, ui-engineering-team-tina-chen, was added as an owner of the Learn Cortex.  It checks to see if one of the members of that team, Sophie Jenkins, appears in the list of all owners of the Learn Cortex entity.
+filter:
+  kind: GENERIC
+  groups:
+    include:
+    - learn-cortex
