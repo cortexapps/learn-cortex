@@ -1,0 +1,20 @@
+name: Post Slack message
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/scorecards/**'
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Post Slack Message
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World from GHA!"}' ${{ env.SLACK_WEBHOOK_URL }}
