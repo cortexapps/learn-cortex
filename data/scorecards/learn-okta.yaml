@@ -67,6 +67,7 @@ rules:
               provider: OKTA
           x-cortex-type: team
         ```
+    - Make this team an owner of the "Learn Cortex" entity.
 
     # CQL Rule
     The CQL rule for this rule verifies that the "Learn Cortex" entity is owned by an Okta team named "Learn Cortex - Okta Team".
