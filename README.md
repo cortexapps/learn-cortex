@@ -8,7 +8,9 @@ the directions listed below.
 - A Cortex instance.
 - The Command prompt (on a Mac: Finder -> Applications -> Utilities -> Terminal)
 - [Homebrew](https://brew.sh/) installed
-    TL;DR
+    
+    **TL;DR**
+
     This command will install homebrew if you don't already have it installed.
     ```
     which brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -38,17 +40,17 @@ in your sandbox.
 
 # Workflows
 There are several workflows that will be available from the Learn Cortex entity:
-- Learn Cortex - create Scorecard
+- **Learn Cortex - create Scorecard**
 
     This will create a Learn Cortex scorecard from a template in your sandbox.  The intent is that you would add markdown
     to the CQL rule in the Learned level to help educate users on a topic.
 
-- Learn Cortex - publish Scorecard
+- **Learn Cortex - publish Scorecard**
 
     This will publish a Learn Cortex scorecard from your sandbox to git.
     A Slack message will be posted to #learn-cortex alerting users to new content in the repository.
 
-- Learn Cortex - install Scorecard
+- **Learn Cortex - install Scorecard**
 
     Install a Learn Cortex scorecard from the learn-cortex repository.  This allows you to add new content using a workflow.
     Alternatively, you can run update your git checkout and run 'just'.
