@@ -1,0 +1,132 @@
+name: Learn Cortex - publish Scorecard
+tag: learn-cortex-publish-scorecard
+description: Publishes a learn-cortex Scorecard to https://github.com/cortexapps/learn-cortex.
+isDraft: true
+filter:
+  entityFilter:
+    typeFilter:
+      types:
+      - service
+    entityGroupFilter:
+      entityGroups:
+      - learn-cortex
+      excludedEntityGroups: []
+  ownershipScope: ALL
+  type: ENTITY
+runResponseTemplate: Successfully published Scorecard.
+actions:
+- name: Get Scorecards
+  slug: get-scorecards
+  schema:
+    headers:
+      Authorization: "Bearer {{context.secrets.cortex_api_key}}"
+    httpMethod: GET
+    payload: null
+    url: https://api.getcortexapp.com/api/v1/scorecards
+    type: HTTP_REQUEST
+  outgoingActions:
+  - parse-scorecards
+  isRootAction: true
+- name: Parse Scorecards
+  slug: parse-scorecards
+  schema:
+    expression: "[.actions.\"get-scorecards\".outputs.body.scorecards[] | select (.name[0:5]\
+      \ == \"Learn\") | .name] | sort"
+    type: JQ
+  outgoingActions:
+  - user-input
+  isRootAction: false
+- name: User input
+  slug: user-input
+  schema:
+    inputs:
+    - name: Scorecard
+      description: Select scorecard to publish to GitHub.
+      key: scorecard
+      required: false
+      options: []
+      defaultValue: null
+      placeholder: null
+      allowAdditionalOptions: false
+      type: SELECT_FIELD
+    - name: Description
+      description: Provide a short description for this change.  It will be used for
+        the git commit message.
+      key: description
+      required: true
+      defaultValue: null
+      placeholder: null
+      validationRegex: null
+      type: INPUT_FIELD
+    inputOverrides:
+    - inputKey: scorecard
+      outputVariable: actions.parse-scorecards.outputs.result
+      type: OPTION
+    type: USER_INPUT
+  outgoingActions:
+  - scorecard-tag
+  isRootAction: false
+- name: Scorecard tag
+  slug: scorecard-tag
+  schema:
+    expression: ".actions.\"user-input\".outputs.scorecard as $name | .actions.\"\
+      get-scorecards\".outputs.body.scorecards[] | select(.name == $name) | .tag"
+    type: JQ
+  outgoingActions:
+  - get-scorecard-descriptor
+  isRootAction: false
+- name: Get Scorecard descriptor
+  slug: get-scorecard-descriptor
+  schema:
+    headers:
+      Authorization: "Bearer {{context.secrets.cortex_api_key}}"
+    httpMethod: GET
+    payload: null
+    url: "https://api.getcortexapp.com/api/v1/scorecards/{{actions.scorecard-tag.outputs.result}}/descriptor"
+    type: HTTP_REQUEST
+  outgoingActions:
+  - send-message
+  isRootAction: false
+- name: Send message
+  slug: send-message
+  schema:
+    channel: general
+    message: |-
+      A new Learn Cortex scorecard has been published: {{actions.scorecard-tag.outputs.result}}.
+
+      ```
+      Multi line code block
+      Does it work?
+      I hope so.
+      ```
+
+      *Here is the content:*
+
+      ```
+      {{{actions.get-scorecard-descriptor.outputs.body}}}
+      ```
+    type: SLACK
+  outgoingActions:
+  - create-or-update-file
+  isRootAction: false
+- name: Create or update file
+  slug: create-or-update-file
+  schema:
+    alias: cortex - prod
+    repositoryName: cortexapps/learn-cortex
+    commitMessage: "{{actions.scorecard-tag.outputs.result}}: {{actions.user-input.outputs.description}}"
+    content: "{{{actions.get-scorecard-descriptor.outputs.body}}}"
+    path: "data/scorecards/{{actions.scorecard-tag.outputs.result}}.yaml"
+    branch: main
+    committer:
+      name: "{{context.initiatedBy.name}}"
+      email: "{{context.initiatedBy.email}}"
+    author:
+      name: "{{context.initiatedBy.name}}"
+      email: "{{context.initiatedBy.email}}"
+    type: GITHUB_CREATE_OR_UPDATE_FILE
+  outgoingActions: []
+  isRootAction: false
+runRestrictionPolicies: []
+iconTag: null
+

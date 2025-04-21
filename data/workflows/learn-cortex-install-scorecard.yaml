@@ -1,0 +1,94 @@
+name: Learn Cortex - install Scorecard
+tag: learn-cortex-install-scorecard
+description: Adds a scorecard from https://github.com/cortexapps/learn-cortex/tree/main/data/scorecards.
+isDraft: true
+filter:
+  entityFilter:
+    typeFilter:
+      types:
+      - service
+    entityGroupFilter:
+      entityGroups:
+      - learn-cortex
+      excludedEntityGroups: []
+  ownershipScope: ALL
+  type: ENTITY
+runResponseTemplate: Successfully installed Scorecard.
+actions:
+- name: Get file
+  slug: get-file
+  schema:
+    inputs:
+      path: data/scorecards
+      repo: cortexapps/learn-cortex
+    integrationAlias: cortex - prod
+    actionIdentifier: github.getFile
+    type: ADVANCED_HTTP_REQUEST
+  outgoingActions:
+  - data-transformation
+  isRootAction: true
+- name: Data transformation
+  slug: data-transformation
+  schema:
+    expression: "[.actions.\"get-file\".outputs.response[].name] | sort"
+    type: JQ
+  outgoingActions:
+  - user-input
+  isRootAction: false
+- name: User input
+  slug: user-input
+  schema:
+    inputs:
+    - name: Select
+      description: null
+      key: select
+      required: false
+      options: []
+      defaultValue: null
+      placeholder: null
+      allowAdditionalOptions: false
+      type: SELECT_FIELD
+    inputOverrides:
+    - inputKey: select
+      outputVariable: actions.data-transformation.outputs.result
+      type: OPTION
+    type: USER_INPUT
+  outgoingActions:
+  - get-scorecard-file
+  isRootAction: false
+- name: Get Scorecard file
+  slug: get-scorecard-file
+  schema:
+    inputs:
+      path: "data/scorecards/{{actions.user-input.outputs.select}}"
+      repo: cortexapps/learn-cortex
+    integrationAlias: cortex - prod
+    actionIdentifier: github.getFile
+    type: ADVANCED_HTTP_REQUEST
+  outgoingActions:
+  - data-transformation-2
+  isRootAction: false
+- name: Data transformation
+  slug: data-transformation-2
+  schema:
+    expression: .actions."get-scorecard-file".outputs.response.content | gsub("\n";
+      "") | @base64d
+    type: JQ
+  outgoingActions:
+  - http-request
+  isRootAction: false
+- name: HTTP request
+  slug: http-request
+  schema:
+    headers:
+      Content-Type: application/yaml;charset=UTF-8
+      Authorization: "Bearer {{context.secrets.cortex_api_key}}"
+    httpMethod: POST
+    payload: "{{{actions.data-transformation-2.outputs.result}}}"
+    url: https://api.getcortexapp.com/api/v1/scorecards/descriptor
+    type: HTTP_REQUEST
+  outgoingActions: []
+  isRootAction: false
+runRestrictionPolicies: []
+iconTag: null
+
