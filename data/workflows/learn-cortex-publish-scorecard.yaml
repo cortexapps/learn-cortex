@@ -1,7 +1,7 @@
 name: Learn Cortex - publish Scorecard
 tag: learn-cortex-publish-scorecard
 description: Publishes a learn-cortex Scorecard to https://github.com/cortexapps/learn-cortex.
-isDraft: true
+isDraft: false
 filter:
   entityFilter:
     typeFilter:
@@ -84,28 +84,6 @@ actions:
     payload: null
     url: "https://api.getcortexapp.com/api/v1/scorecards/{{actions.scorecard-tag.outputs.result}}/descriptor"
     type: HTTP_REQUEST
-  outgoingActions:
-  - send-message
-  isRootAction: false
-- name: Send message
-  slug: send-message
-  schema:
-    channel: general
-    message: |-
-      A new Learn Cortex scorecard has been published: {{actions.scorecard-tag.outputs.result}}.
-
-      ```
-      Multi line code block
-      Does it work?
-      I hope so.
-      ```
-
-      *Here is the content:*
-
-      ```
-      {{{actions.get-scorecard-descriptor.outputs.body}}}
-      ```
-    type: SLACK
   outgoingActions:
   - create-or-update-file
   isRootAction: false

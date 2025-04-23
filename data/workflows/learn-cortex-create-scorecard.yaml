@@ -42,13 +42,36 @@ actions:
       placeholder: null
       validationRegex: null
       type: INPUT_FIELD
+    - name: Publish
+      description: Publish unwritten Scorecard to git
+      key: publish
+      required: false
+      defaultValue: false
+      type: TOGGLE_FIELD
+    - name: Author
+      description: |-
+        **Toggle on**: if you will be the author of the scorecard.
+        **Toggle off**: you want to suggest a course but are seeking a volunteer to be the author.
+      key: author
+      required: false
+      defaultValue: false
+      type: TOGGLE_FIELD
     inputOverrides: []
     type: USER_INPUT
   outgoingActions:
-  - data-transformation
+  - author
   isRootAction: true
-- name: Data transformation
-  slug: data-transformation
+- name: Author
+  slug: author
+  schema:
+    expression: .context.user.email as $email | .actions."user-input".outputs.author
+      | if . == true then $email else "None" end
+    type: JQ
+  outgoingActions:
+  - scorecard-slug
+  isRootAction: false
+- name: Scorecard slug
+  slug: scorecard-slug
   schema:
     expression: .actions."user-input".outputs.topic | ascii_downcase | gsub(" "; "-")
     type: JQ
@@ -62,9 +85,9 @@ actions:
       Content-Type: application/yaml;charset=UTF-8
       Authorization: "Bearer {{context.secrets.cortex_api_key}}"
     httpMethod: POST
-    payload: "tag: learn-{{actions.data-transformation.outputs.result}}\nname: Learn\
-      \ {{actions.user-input.outputs.topic}}\ndescription: |\n  Cortex Learn series:\
-      \ {{actions.user-input.outputs.description}}\ndraft: false\nnotifications:\n\
+    payload: "tag: learn-{{actions.scorecard-slug.outputs.result}}\nname: Learn {{actions.user-input.outputs.topic}}\n\
+      description: |\n  Cortex Learn series: {{actions.user-input.outputs.description}}.\
+      \  Author: {{actions.author.outputs.result}}\ndraft: false\nnotifications:\n\
       \  enabled: false\n  scoreDropNotificationsEnabled: false\nexemptions:\n  enabled:\
       \ false\n  autoApprove: false\nevaluation:\n  window: 168\nladder:\n  name:\
       \ Default Ladder\n  levels:\n  - name: Unwritten\n    rank: 1\n    color: \"\
@@ -79,6 +102,52 @@ actions:
       \  kind: GENERIC\n  groups:\n    include:\n    - learn-cortex"
     url: https://api.getcortexapp.com/api/v1/scorecards/descriptor
     type: HTTP_REQUEST
+  outgoingActions:
+  - publish
+  isRootAction: false
+- name: Publish
+  slug: publish
+  schema:
+    branches:
+    - name: publish to git
+      slug: publish-to-git
+      outgoingAction: http-request-2
+      expression: "actions[\"user-input\"].outputs.publish == true"
+      type: CONDITIONAL
+    fallbackBranch: null
+    joiningAction: null
+    type: CONDITIONAL_BRANCH
+  outgoingActions:
+  - http-request-2
+  isRootAction: false
+- name: HTTP request
+  slug: http-request-2
+  schema:
+    headers:
+      Authorization: "Bearer {{context.secrets.cortex_api_key}}"
+    httpMethod: GET
+    payload: null
+    url: "https://api.getcortexapp.com/api/v1/scorecards/learn-{{actions.scorecard-slug.outputs.result}}/descriptor"
+    type: HTTP_REQUEST
+  outgoingActions:
+  - create-or-update-file
+  isRootAction: false
+- name: Create or update file
+  slug: create-or-update-file
+  schema:
+    alias: cortex - prod
+    repositoryName: cortexapps/learn-cortex
+    commitMessage: "{{actions.scorecard-slug.outputs.result}}: {{actions.user-input.outputs.description}}"
+    content: "{{{actions.http-request-2.outputs.body}}}"
+    path: "data/scorecards/{{actions.scorecard-slug.outputs.result}}.yaml"
+    branch: main
+    committer:
+      name: "{{context.initiatedBy.name}}"
+      email: "{{context.initiatedBy.email}}"
+    author:
+      name: "{{context.initiatedBy.name}}"
+      email: "{{context.initiatedBy.email}}"
+    type: GITHUB_CREATE_OR_UPDATE_FILE
   outgoingActions: []
   isRootAction: false
 runRestrictionPolicies: []
