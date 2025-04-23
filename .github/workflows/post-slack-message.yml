@@ -37,12 +37,13 @@ jobs:
          if [ $? -eq 0 ]; then
             message="${message}\n*Status:* This is an unwritten Scorecard.\n"
 
-	    grep "Author: None" ${file} >/dev/null 2>&1
-	    if [ $? -eq 0 ]; then
-	       message="${message}\n*Author:* This scorecard needs an author.\n"
-	    else
-	       message="${message}\n*Author:* The submitter will be the author.\n"
-	    fi
+            grep "Author: None" ${file} >/dev/null 2>&1
+            if [ $? -eq 0 ]; then
+               message="${message}\n*Author:* This scorecard needs an author.\n"
+            else
+               message="${message}\n*Author:* The submitter will be the author.\n"
+            fi
          fi
+
          echo "message = ${message}"
          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"${message}\"}" ${{ env.SLACK_WEBHOOK_URL }}
