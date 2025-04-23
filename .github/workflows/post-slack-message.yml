@@ -26,7 +26,7 @@ jobs:
       run: |
          message="Updated content has been published to <https://github.com/${GITHUB_REPOSITORY}|Learn Cortex>\n"
          message="${message}*Description*: ${{ github.event.head_commit.message }}\n"
-         message="${message}*Actor*: ${GITHUB_ACTOR}\n"
+         message="${message}*Submitted by*: ${GITHUB_ACTOR}\n"
          for file in ${ALL_CHANGED_FILES}; do
             message="${message}*File:* <https://github.com/${GITHUB_REPOSITORY}/blob/main/$file|$file> was changed\n"
          done
