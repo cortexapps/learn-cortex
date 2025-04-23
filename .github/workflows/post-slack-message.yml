@@ -24,7 +24,7 @@ jobs:
       env:
          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
-         set -o pipefail # Do not want step to exit if grep gets a return code of 1.
+         set +e
 
          message="Updated content has been published to <https://github.com/${GITHUB_REPOSITORY}|Learn Cortex>\n"
          message="${message}*Description*: ${{ github.event.head_commit.message }}\n"
