@@ -34,4 +34,5 @@ jobs:
          if [ $? -eq 0 ]; then
             message="${message}\nThis is an unwritten scorecard that is looking for an owner.\n"
          fi
+         echo "message = ${message}"
          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"${message}\"}" ${{ env.SLACK_WEBHOOK_URL }}
