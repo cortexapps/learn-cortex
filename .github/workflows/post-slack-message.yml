@@ -30,12 +30,19 @@ jobs:
          message="${message}*Description*: ${{ github.event.head_commit.message }}\n"
          message="${message}*Submitted by*: ${GITHUB_ACTOR}\n"
          for file in ${ALL_CHANGED_FILES}; do
-            message="${message}*File:* <https://github.com/${GITHUB_REPOSITORY}/blob/main/$file|$file> was changed\n"
+            message="${message}*Scorecard:* <https://github.com/${GITHUB_REPOSITORY}/blob/main/$file|$file>\n"
          done
    
-         grep "Author: None" ${file} >/dev/null 2>&1
+         grep "Unwritten" ${file} >/dev/null 2>&1
          if [ $? -eq 0 ]; then
-            message="${message}\nThis is an unwritten scorecard that is looking for an owner.\n"
+            message="${message}\n*Status:* This is an unwritten Scorecard.\n"
+
+	    grep "Author: None" ${file} >/dev/null 2>&1
+	    if [ $? -eq 0 ]; then
+	       message="${message}\n*Author:* This scorecard needs an author.\n"
+	    else
+	       message="${message}\n*Author:* The submitter will be the author.\n"
+	    fi
          fi
          echo "message = ${message}"
          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"${message}\"}" ${{ env.SLACK_WEBHOOK_URL }}
