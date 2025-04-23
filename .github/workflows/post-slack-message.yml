@@ -24,12 +24,15 @@ jobs:
       env:
          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
+         set -o pipefail # Do not want step to exit if grep gets a return code of 1.
+
          message="Updated content has been published to <https://github.com/${GITHUB_REPOSITORY}|Learn Cortex>\n"
          message="${message}*Description*: ${{ github.event.head_commit.message }}\n"
          message="${message}*Submitted by*: ${GITHUB_ACTOR}\n"
          for file in ${ALL_CHANGED_FILES}; do
             message="${message}*File:* <https://github.com/${GITHUB_REPOSITORY}/blob/main/$file|$file> was changed\n"
          done
+   
          grep "Author: None" ${file} >/dev/null 2>&1
          if [ $? -eq 0 ]; then
             message="${message}\nThis is an unwritten scorecard that is looking for an owner.\n"
