@@ -1,36 +1,87 @@
-cortex_cli := 'cortex'
-CORTEX_API_KEY := `env CORTEX_API_KEY 2>/dev/null || echo ""`
-CORTEX_BASE_URL := `env CORTEX_BASE_URL 2>/dev/null|| echo "https://api.getcortexapp.com"`
+cortex_cli      := 'cortex'
 
 help:
    @just -l
+   @echo ""
+   @echo "Details"
+   @echo "The setup recipe requires the following environment variables to be set:"
+   @echo "- CORTEX_API_KEY  - must have edit entity permission at a minimum, typically will be an admin key"
+   @echo "- CORTEX_BASE_URL - API endpoint, defaults to https://api.getcortexapp.com"
+   @echo "- CORTEX_EMAIL    - the user's cortex email address; will be used to assign as owner of the Learn Cortex entity"
+   @echo ""
+   @echo "The workflows recipe requires the following environment variables to be set:"
+   @echo "- GH_PAT  - a GitHub personal token that allows read/write access to github.com/cortexapps"
 
 # Add test entities and Scorecard to Cortex instance
-setup: _check load-data workflows _success
+setup: _check load-data _success
 
 _check-vars:
    #!/bin/bash
-   if [ -z ${CORTEX_API_KEY+x} ]
-   then 
-      echo "CORTEX_API_KEY environment variable is not set."
+
+   echo "Checking environment variables"
+
+   if [[ -z "${CORTEX_API_KEY}" ]]; then
+      echo ""
+      echo "ERROR: CORTEX_API_KEY environment variable is not set."
+      echo "------------------------------------------------------"
+      echo "Please set environment variable CORTEX_API_KEY and retry."
+      echo "Refer to https://docs.cortex.io/docs/walkthroughs/workspace-settings/personal-tokens for details on creating a personal token"
+      echo "Example: export CORTEX_API_KEY=<your personal token>"
+      echo ""
       exit 1
    fi
 
-   if [ -z ${CORTEX_BASE_URL+x} ]
-   then 
-      echo "CORTEX_BASE_URL environment variable is not set."
-      exit
+   if [[ -z "${CORTEX_EMAIL}" ]]; then
+      echo ""
+      echo "ERROR: CORTEX_EMAIL environment variable is not set."
+      echo "----------------------------------------------------"
+      echo "Please set environment variable CORTEX_EMAIL and retry."
+      echo "It will be used as the owner of the Learn Cortex entity"
+      echo "Example: export CORTEX_EMAIL=joe@example.com"
+      echo ""
+      exit 1
    fi
 
-_check: _check-brew _check-vars _check-cortex _mkdirs
+   CORTEX_BASE_URL=${CORTEX_BASE_URL:-https://api.getcortexapp.com}
+
+_check-pat:
+   #!/bin/bash
+
+   echo "Checking if GitHub PAT environment variable is set"
+
+   if [[ -z "${GH_PAT}" ]]; then
+      echo ""
+      echo "ERROR: GH_PAT environment variable is not set."
+      echo "------------------------------------------------------"
+      echo "This setup script will create a GitHub Personal token integration in Cortex."
+      echo "It requires a GitHub Personal Access Token to be set as an environment variable."
+      echo "Refer to https://docs.cortex.io/docs/reference/integrations/github#how-to-configure-github-with-cortex"
+      echo "for details on creating the token."
+      echo ""
+      echo "Once set, copy the content of the token and use it to set an environment variable as follows:"
+      echo "export GH_PAT=yourTokenValue"
+      echo ""
+      exit 1
+   fi
+
+
+_check: _check-brew _check-jq _check-yq _check-vars _check-cortex _mkdirs
 
 _check-brew:
    @echo "Checking if brew is installed"
    @which brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+_check-jq:
+   @echo "Checking if jq is installed"
+   @which jq > /dev/null || brew install jq
+
+_check-yq:
+   @echo "Checking if yq is installed"
+   @which yq > /dev/null || brew install yq
+
 _check-cortex:
    #!/bin/bash
-   echo "checking if cortex CLI can access tenant"
+   echo "Checking if cortex CLI can access tenant"
    {{cortex_cli}} audit-logs get -p 0 -z 1 > /dev/null 2>&1
    if [[ $? -ne 0 ]]; then
       echo "ERROR: Unable to access tenant with Cortex CLI."
@@ -62,8 +113,11 @@ load-data: _check
    @echo "Adding data to tenant"
    @{{cortex_cli}} backup import -d data > /dev/null 2>&1
 
+   @cat data/catalog/learn-cortex.yaml | yq -e ".info.x-cortex-owners = [{ \"name\": \"${CORTEX_EMAIL}\", \"type\": \"EMAIL\" }]" | cortex catalog create -f- > /dev/null 2>&1
+   
+
 # Add workflows for the Learn Cortex entity
-workflows: _check
+workflows: _check _github
    #!/bin/bash
    for workflow in $(ls -1 data/workflows)
    do
@@ -80,5 +134,16 @@ workflows: _check
       if [ $status_code -ne 200 ]; then
         echo "curl failed with HTTP code $status_code"
         exit 1
+      else
+        echo "Added workflow: ${workflow}"
       fi
    done
+
+# Add secrets needed for the Learn Cortex entity
+_github: _check-pat
+   #!/bin/bash
+
+   cortex integrations github get-personal -a "cortex - prod" > /dev/null 2>&1
+   if [[ $? -ne 0 ]]; then
+      envsubst < data/integrations/github/pat-configuration-json.tmpl | cortex integrations github add-personal -f-
+   fi
