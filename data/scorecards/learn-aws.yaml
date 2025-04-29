@@ -1,0 +1,69 @@
+tag: learn-aws
+name: Learn AWS
+description: |
+  Cortex Learn series: learn about the Cortex AWS integration.
+draft: false
+notifications:
+  enabled: false
+  scoreDropNotificationsEnabled: false
+exemptions:
+  enabled: false
+  autoApprove: false
+evaluation:
+  window: 168
+ladder:
+  name: Default Ladder
+  levels:
+  - name: Incomplete
+    rank: 1
+    color: "#FF9E9E"
+  - name: Completed
+    rank: 2
+    color: "#7CCB92"
+rules:
+- title: Learned
+  expression: dependencies.out().any((dependency) => dependency.type == "AWS::S3::Bucket")
+  identifier: a335adc6-3bac-381e-9147-e8403fb8c4df
+  weight: 1
+  level: Completed
+  failureMessage: "# About\nThis scorecard rule will walk you through learning AWS\
+    \ for Cortex.\n\n# Setup\n- Sign up for a [free tier AWS account](https://portal.aws.amazon.com/billing/signup?p=ft&c=hp&z=6&refid=78b916d7-7c94-4cab-98d9-0ce5e648dd5f).\n\
+    \n- You will be prompted for a credit card.  We recommend using a virtual credit\
+    \ card service like privacy.com.  Create a virtual credit card with a $1 total\
+    \ spend limit.  Amazon indicates they may put a temporary $1 hold on your account\
+    \ to prove who you are.\n\n- Follow the Cortex [documentation](https://docs.cortex.io/docs/reference/integrations/aws)\
+    \ for configuring the AWS integration.\n\n- Make sure you have enabled [automatic\
+    \ import of AWS entities](https://docs.cortex.io/docs/reference/integrations/aws#enable-automatic-import-of-aws-entities).\
+    \  Not required if you complete end up manually importing entities (details below),\
+    \ but will be helpful for ongoing updates in your workspace.\n\n## Create an S3\
+    \ bucket via the AWS console\n- Login to the AWS console.  This should be a URL\
+    \ of the form https://<account id>.signin.aws.amazon.com/console.\n\n- Search\
+    \ for S3 in the search.\n\n- Click on S3 to go to the Simple Storage Service (S3)\
+    \ page.\n\n- Click on the \"Create Bucket\" button.\n\n- Give the bucket a unique\
+    \ name.  The bucket name needs to be unique, so recommend a format like <firstName>-<lastName>-learn-cortex-bucket.\n\
+    \n- Click on the add tag button.\n\n- Set key = service, value = learn-cortex.\n\
+    \n- Optional: click on the add tag button again.\n\n- Set key = owner, value =\
+    \ <x-cortex-tag for any team entity in your workspace>.\n\n# Task\n\n- AWS entities\
+    \ are synced daily in Cortex, but you can force a manual sync.\n    - Catalogs\
+    \ -> All Entities -> Import Entities -> Import Discovered Entities -> AWS -> Sync\
+    \ Entities.\n    - Click on your S3 bucket.\n    - Confirm Import\n- You should\
+    \ end up with an AWS::S3::Bucket entity resembling the following entity YAML:\n\
+    \    \n```\nopenapi: 3.0.1\ninfo:\n  title: jeff-schnitter-learn-cortex\n  x-cortex-tag:\
+    \ jeff-schnitter-learn-cortex\n  x-cortex-type: AWS::S3::Bucket\n  x-cortex-infra:\n\
+    \    aws:\n      cloudControl:\n      - type: AWS::S3::Bucket\n        region:\
+    \ us-east-1\n        accountId: \"331409392944\"\n        identifier: jeff-schnitter-learn-cortex\n\
+    ```\n\n- Outgoing dependencies are synced separately.\n- Navigate to the [relationship\
+    \ graph](https://app.getcortexapp.com/admin/graph) -> 3 dots -> Sync dependencies.\n\
+    - Navigate to the Learn Cortex entity\n- You should see an outgoing dependencies\
+    \ for the Learn Cortex entity that references your S3 bucket.\n\n![Learn Cortex\
+    \ entity](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/v1uzNDw6/57432f96-6ea8-40e0-a066-9c4d27086b94.jpg?source=viewer&v=cb5f1793e6e9308cbd5ac04233a3477c)\n\
+    \n# CQL Rule\nThe CQL rule for this rule verifies that the \"Learn Cortex\" has\
+    \ an outgoing dependency of type \"AWS::S3::Bucket\"."
+filter:
+  kind: GENERIC
+  types:
+    include:
+    - service
+  groups:
+    include:
+    - learn-cortex
