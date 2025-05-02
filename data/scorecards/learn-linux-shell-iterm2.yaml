@@ -1,0 +1,86 @@
+tag: learn-linux-shell-iterm2
+name: Learn Linux shell - iterm2
+description: |
+  Cortex Learn series: Learn how to install and use iterm2 terminal program.  Author: jeff.schnitter@cortex.io.
+draft: false
+notifications:
+  enabled: false
+  scoreDropNotificationsEnabled: false
+exemptions:
+  enabled: false
+  autoApprove: false
+evaluation:
+  window: 168
+ladder:
+  name: Default Ladder
+  levels:
+  - name: Incomplete
+    rank: 1
+    color: "#FF9E9E"
+  - name: Completed
+    rank: 2
+    color: "#7CCB92"
+rules:
+- title: Learned
+  expression: "customEvents(lookback = duration(\"P10Y\"), types = [\"LEARN_CORTEX\"\
+    ]).filter((event) => event.title == \"Learn Linux shell - iterm2\").length > 0"
+  identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
+  weight: 1
+  level: Completed
+  failureMessage: "# About\nIn this Learn Cortex scorecard you will:\n- install [iterm2](https://iterm2.com/),\
+    \ an alternate MacOS terminal program\n- add the CORTEX_API_KEY environment variable\
+    \ to your .bashrc file\n\n# Set up\n- [Download](https://iterm2.com/downloads/stable/latest)\
+    \ and install [iterm2](https://iterm2.com).\n- After installing, click on the\
+    \ iterm2 icon to launch the terminal.\n\n## Change the default SHELL to bash\n\
+    From [LinuxCommand.org](https://linuxcommand.org), the shell is a program that\
+    \ takes commands from the keyboard and gives them to the operating system to perform.\n\
+    \nThe default shell on MacOS is zsh.  We are going to change it to bash because\
+    \ I'm most familiar with bash.\n\n- Type \n    ```\n    echo $SHELL\n    ```\n\
+    \  and press return to see the name of the default shell.\n    ```\n    jeffschnitter@mac\
+    \ ~ $ echo $SHELL\n    /bin/zsh\n    ```\n- Type \n    ```\n    chsh -s /bin/bash\n\
+    \    ```\n     to change the default shell to bash.\n\n    You will be prompted\
+    \ to enter your Mac login password.\n\n    ```\n    jeffschnitter@mac ~ $ chsh\
+    \ -s /bin/bash\n    Changing shell for jeffschnitter.\n    Password for jeffschnitter:\n\
+    \    jeffschnitter@mac ~ $\n    ```\n- Close iterm2 and reopen it.\n- Type `echo\
+    \ $SHELL`  and press return to see the name of the default shell.  It should be\
+    \ changed to /bin/bash.\n    ```\n    jeffschnitter@mac ~ $ echo $SHELL\n/bin/bash\n\
+    \    ```\n\n## Add your CORTEX_API_KEY variable to your .bashrc file\n\n- When\
+    \ your shell program is /bin/bash, any time you start a terminal window, a file\
+    \ in your home directory named .bashrc will get sourced, meaning all the shell\
+    \ commands in that file will get executed.\n\n- Your home directory is defined\
+    \ with an environment variable named $HOME.  A shorthand way to refer to your\
+    \ home directory is to use the ~ character.\n     ```\n    jeffschnitter@mac ~\
+    \ $ echo $HOME\n    /Users/jeffschnitter\n    jeffschnitter@mac ~ $ echo ~\n \
+    \   /Users/jeffschnitter\n    ```\n\n- Therefore, we can refer to your .bashrc\
+    \ file in your home directory with both of these forms:\n    - $HOME/.bashrc\n\
+    \    - ~/.bashrc\n\n- If you have not previously created a personal token, follow\
+    \ the directions at https://docs.cortex.io/settings/api-keys/personal-tokens#creating-a-personal-token.\
+    \  Save the contents of the key in your clipboard.\n\n- Paste the following contents\
+    \ (replace _yourApiKey_ with the contents of your personal token or API key) into\
+    \ your terminal and press enter.\n    ````\n    cat << EOF >> ~/.bashrc\n    export\
+    \ CORTEX_API_KEY=_your API key_\n    EOF\n    ```\n- ~/.bashrc is sourced when\
+    \ you open a new terminal.  Alternatively you can type \n   ```\n   source ~/.bashrc\n\
+    \    ```\n    to source the command.  Do one of these things to have the contents\
+    \ of your ~/.bashrc file re-evaluated.\n\n- Enter \n    ```\n    echo $CORTEX_API_KEY\n\
+    \    ```\n\n-  You should see the contents of your API key on the terminal.\n\
+    \    ```\n    jeffschnitter@mac ~ $ echo $CORTEX_API_KEY\n    eyJhbGciOifYouCanReadThisYouAreTooCloseiJIUzUxMiIs\n\
+    \    jeffschnitter@mac ~ $\n    ```\n\n\n## Further reading\n- [LinuxCommand.org](https://linuxcommand.org/)\n\
+    \n# Related Cortex Academy courses\nNone.\n\n# Task\nPaste the contents below\
+    \ into your shell and press enter.  This will use the value of your CORTEX_API_KEY\
+    \ environment variable set in your ~/.bashrc file to authenticate with the Cortex\
+    \ API and create a custom event for the Learn Cortex entity.\n \n```\ncurl -X\
+    \ POST \"https://api.getcortexapp.com/api/v1/catalog/learn-cortex/custom-events\"\
+    \ \\\n   -H \"Content-Type: application/json\" \\\n   -H \"Authorization: Bearer\
+    \ ${CORTEX_API_KEY}\" \\\n   --data-binary @- <<EOF\n     {\n       \"customData\"\
+    : {\n       },\n       \"description\": \"Custom event created from a terminal\
+    \ curl command\",\n       \"timestamp\": \"$(date +'%Y-%m-%dT%H:%M:%S.%3Z')\"\
+    ,\n       \"title\": \"Learn Linux Shell - iterm2\",\n       \"type\": \"LEARN_CORTEX\"\
+    \n     }\nEOF\n```\n\n\n# CQL Rule\nThe CQL checks to see if you have a Custom\
+    \ Event of type 'LEARN_CORTEX' with a title of \"Learn Linux Shell - iterm2\"\
+    .  You need to recreate this event every 10 years or else this rule will fail.\
+    \ :)\n"
+filter:
+  kind: GENERIC
+  groups:
+    include:
+    - learn-cortex
