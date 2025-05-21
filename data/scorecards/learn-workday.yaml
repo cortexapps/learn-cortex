@@ -22,9 +22,9 @@ ladder:
     color: "#7CCB92"
 rules:
 - title: Learned
-  expression: ownership.allOwners().filter((member) => member.name.matchesIn("Sophia
-    Jenkins") and member.identityProviderSources.any(group=> group.source=="WORKDAY"
-    and group.groupIdentifier == "ENG-UI-TEAM")).length > 0
+  expression: ownership.teams().filter(team => team.identityProviderGroups.any(group
+    => group.source == "WORKDAY" and group.groupIdentifier == "ENG-UI-TEAM") and team.members.any(member
+    => member.name == "Sophia Jenkins")).length > 0
   identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
   weight: 1
   level: Completed
@@ -93,6 +93,9 @@ rules:
     The CQL rule for this Scorecard verifies that one of the teams from the mock Workday report, ui-engineering-team-tina-chen, was added as an owner of the Learn Cortex.  It checks to see if one of the members of that team, Sophie Jenkins, appears in the list of all owners of the Learn Cortex entity.
 filter:
   kind: GENERIC
+  types:
+    include:
+    - service
   groups:
     include:
     - learn-cortex
