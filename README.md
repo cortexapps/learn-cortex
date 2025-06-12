@@ -7,6 +7,7 @@ the directions listed below.
 # Pre-requistites
 - A Cortex instance.
 - The Command prompt (on a Mac: Finder -> Applications -> Utilities -> Terminal)
+- a folder on your computer to clone the learn-cortex repository to
 - [Homebrew](https://brew.sh/) installed
     
     **TL;DR**
@@ -16,13 +17,59 @@ the directions listed below.
     which brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
 
-# Installation
-This repository uses [just](https://github.com/casey/just) to run the set up tasks.
 
-```
-brew install just
-just setup
-```
+# Installation
+- If needed, create a folder on your computer to store repositories (such as ~/Repos)
+  
+    ```
+    mkdir ~/Repos
+    ```
+- Install git
+
+    ```
+    brew install git
+    ```
+
+- Navigate to your repository folder, and clone the learn-cortex repository
+
+    ```
+    cd ~/Repos
+    git clone https://github.com/cortexapps/learn-cortex.git
+    ```
+
+- This repository uses [just](https://github.com/casey/just) to run the set up tasks
+
+    ```
+    brew install just
+    ```
+
+- install the cortex CLI (required to setup Justfile)
+
+    ```
+    brew tap cortexapps/tap
+    brew install cortexapps-cli
+    ```
+
+- Create a Cortex personal token following the steps in https://docs.cortex.io/docs/walkthroughs/workspace-settings/personal-tokens, and then set environment variable CORTEX_API_KEY with the token value
+
+    ```
+    export CORTEX_API_KEY=<your personal token>
+    ```
+
+- set environment variable CORTEX_EMAIL with email that will be used as the owner of the Learn Cortex entity
+
+    ```
+    export CORTEX_EMAIL=joe@example.com
+    ```
+
+- Navigate to the newly-cloned learn-cortex folder and run just setup
+
+    ```
+    cd learn-cortex
+    just setup
+    ```
+
+
 
 # The Learn Cortex entity
 You will now have an entity named Learn Cortex in your catalog. 
