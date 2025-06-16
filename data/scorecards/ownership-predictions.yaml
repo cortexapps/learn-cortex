@@ -1,7 +1,6 @@
 tag: learn-ownership-predictions
 name: Learn Ownership predictions
-description: "Cortex Learn series: Learn how to setup and use ownership predictions.\
-  \  Author: \n"
+description: "Cortex Learn series: Learn how to setup and use ownership predictions.  Author: \n"
 draft: false
 notifications:
   enabled: false
@@ -14,37 +13,40 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Unwritten
-    rank: 1
-    color: "#D7AC58"
-  - name: Completed
-    rank: 2
-    color: "#7CCB92"
+    - name: Unwritten
+      rank: 1
+      color: "#D7AC58"
+    - name: Completed
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned
-  expression: custom("learned") != null
-  identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
-  weight: 1
-  level: Completed
-  failureMessage: |
-    # About
-    Describe what the scorecard does.
+  - title: Learned
+    expression: custom("learned") != null
+    identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
+    weight: 1
+    level: Completed
+    failureMessage: |
+      # About
+      Describe what the scorecard does.
 
-    # Set up
-    Refer to any existing documentation at https://cortex.io/docs and describe any third party software setup.
-
-
-    # Related Cortex Academy courses
-    List any related courses available at academy.cortex.io.
-
-    # Task
-    Describe the steps to complete the task here.
+      # Set up
+      Refer to any existing documentation at https://cortex.io/docs and describe any third party software setup.
 
 
-    # CQL Rule
-    Explain what the CQL checks.
+      # Related Cortex Academy courses
+      List any related courses available at academy.cortex.io.
+
+      # Task
+      Describe the steps to complete the task here.
+
+
+      # CQL Rule
+      Explain what the CQL checks.
 filter:
   kind: GENERIC
+  types:
+    include:
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex

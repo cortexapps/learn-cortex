@@ -14,65 +14,66 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Incomplete
-    rank: 1
-    color: "#FF9E9E"
-  - name: Completed
-    rank: 2
-    color: "#7CCB92"
+    - name: Incomplete
+      rank: 1
+      color: "#FF9E9E"
+    - name: Completed
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned Okta
-  expression: ownership.teams().filter(team => team.identityProviderGroups.any(group
-    => group.source == "OKTA" and group.groupIdentifier == "Learn Cortex - Okta Team")).length
-    > 0
-  weight: 1
-  level: Completed
-  failureMessage: |
-    # About
-    This scorecard rule will walk you through setting up and testing the [Okta integration](https://docs.cortex.io/docs/reference/integrations/okta) for Cortex.
+  - title: Learned Okta
+    expression: ownership.teams().filter(team => team.identityProviderGroups.any(group => group.source == "OKTA" and group.groupIdentifier == "Learn Cortex - Okta Team")).length > 0
+    weight: 1
+    level: Completed
+    failureMessage: |
+      # About
+      This scorecard rule will walk you through setting up and testing the [Okta integration](https://docs.cortex.io/docs/reference/integrations/okta) for Cortex.
 
-    # Set up
-    Create a free Okta dev account at https://developer.okta.com/signup/.
+      # Set up
+      Create a free Okta dev account at https://developer.okta.com/signup/.
 
-    ## Configure the integration in Cortex
+      ## Configure the integration in Cortex
 
-    ### Gotchas
-    - Don't copy the OKTA URL from the browser.    It should not contain the string "-admin".  For more details, go to https://bit.ly/finding-okta-domain.
-    ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/domain.png)
-    - I wasn't prompted to define any scopes for the API token and didn't define any.
-    - I really don't know what group types are and didn't define any when defining the integration in Cortex.
-        ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/cortex-integration.png)
+      ### Gotchas
+      - Don't copy the OKTA URL from the browser.    It should not contain the string "-admin".  For more details, go to https://bit.ly/finding-okta-domain.
+      ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/domain.png)
+      - I wasn't prompted to define any scopes for the API token and didn't define any.
+      - I really don't know what group types are and didn't define any when defining the integration in Cortex.
+          ![image](https://raw.githubusercontent.com/cortexapps/learn-cortex/refs/heads/main/img/learn-okta/cortex-integration.png)
 
-    # Related Cortex Academy courses
-    None
+      # Related Cortex Academy courses
+      None
 
-    # Task
+      # Task
 
-    - Create a team in your Okta instance named "Learn Cortex - Okta Team".
-        - Directory -> Groups -> Add Group.
-        - Add yourself as a user.
-    - Okta entities are synced daily in Cortex, but you can force a manual sync.
-        - Catalogs -> All Entities -> Import Entities -> Import Discovered Entities -> Okta -> Sync Entities.
-        - Click on "Learn Cortex - Okta Team".
-        - Confirm Import
-    - You should end up with a team entity with the following entity YAML:
-        ```
-        openapi: 3.0.1
-        info:
-          title: Learn Cortex - Okta Team
-          x-cortex-tag: learn-cortex-okta-team
-          x-cortex-team:
-            groups:
-            - name: Learn Cortex - Okta Team
-              provider: OKTA
-          x-cortex-type: team
-        ```
-    - Make this team an owner of the "Learn Cortex" entity.
+      - Create a team in your Okta instance named "Learn Cortex - Okta Team".
+          - Directory -> Groups -> Add Group.
+          - Add yourself as a user.
+      - Okta entities are synced daily in Cortex, but you can force a manual sync.
+          - Catalogs -> All Entities -> Import Entities -> Import Discovered Entities -> Okta -> Sync Entities.
+          - Click on "Learn Cortex - Okta Team".
+          - Confirm Import
+      - You should end up with a team entity with the following entity YAML:
+          ```
+          openapi: 3.0.1
+          info:
+            title: Learn Cortex - Okta Team
+            x-cortex-tag: learn-cortex-okta-team
+            x-cortex-team:
+              groups:
+              - name: Learn Cortex - Okta Team
+                provider: OKTA
+            x-cortex-type: team
+          ```
+      - Make this team an owner of the "Learn Cortex" entity.
 
-    # CQL Rule
-    The CQL rule for this rule verifies that the "Learn Cortex" entity is owned by an Okta team named "Learn Cortex - Okta Team".
+      # CQL Rule
+      The CQL rule for this rule verifies that the "Learn Cortex" entity is owned by an Okta team named "Learn Cortex - Okta Team".
 filter:
   kind: GENERIC
+  types:
+    include:
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex

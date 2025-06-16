@@ -14,35 +14,35 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Unwritten
-    rank: 1
-    color: "#D7AC58"
-  - name: Completed
-    rank: 2
-    color: "#7CCB92"
+    - name: Unwritten
+      rank: 1
+      color: "#D7AC58"
+    - name: Completed
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned GitOps
-  expression: custom("learn-gitops") == "completed"
-  identifier: 0c27c5f1-1d58-388d-95fc-a26ebc20b5e4
-  weight: 1
-  level: Completed
-  failureMessage: |-
-    What about here?
+  - title: Learned GitOps
+    expression: custom("learn-gitops") == "completed"
+    identifier: 0c27c5f1-1d58-388d-95fc-a26ebc20b5e4
+    weight: 1
+    level: Completed
+    failureMessage: |-
+      What about here?
 
-    ![image text](https://www.civitatis.com/f/estados-unidos/san-francisco/big/paseo-barco-san-francisco.jpg)
+      ![image text](https://www.civitatis.com/f/estados-unidos/san-francisco/big/paseo-barco-san-francisco.jpg)
 
-    What about here?
+      What about here?
 
-    What about here?
+      What about here?
 
-    ![image text](https://www.civitatis.com/f/estados-unidos/san-francisco/galeria/big/vistas-panoramicas-golden-gate.jpg)
+      ![image text](https://www.civitatis.com/f/estados-unidos/san-francisco/galeria/big/vistas-panoramicas-golden-gate.jpg)
 
-    ![image text](https://raw.githubusercontent.com/cortexapps/cortex-plugins/refs/heads/master/plugins/cloudforecast/img/cf_ss1.png)
+      ![image text](https://raw.githubusercontent.com/cortexapps/cortex-plugins/refs/heads/master/plugins/cloudforecast/img/cf_ss1.png)
 filter:
   kind: GENERIC
   types:
     include:
-    - service
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex

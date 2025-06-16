@@ -21,7 +21,7 @@ actions:
     inputs:
       path: data/scorecards
       repo: cortexapps/learn-cortex
-    integrationAlias: cortex - prod
+    integrationAlias: cortex-prod
     actionIdentifier: github.getFile
     type: ADVANCED_HTTP_REQUEST
   outgoingActions:
@@ -62,7 +62,7 @@ actions:
     inputs:
       path: "data/scorecards/{{actions.user-input.outputs.select}}"
       repo: cortexapps/learn-cortex
-    integrationAlias: cortex - prod
+    integrationAlias: cortex-prod
     actionIdentifier: github.getFile
     type: ADVANCED_HTTP_REQUEST
   outgoingActions:

@@ -14,26 +14,26 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Unwritten
-    rank: 1
-    color: "#D7AC58"
-  - name: Completed
-    rank: 2
-    color: "#7CCB92"
+    - name: Unwritten
+      rank: 1
+      color: "#D7AC58"
+    - name: Completed
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned
-  expression: custom("learn-json") == "completed"
-  identifier: a4cd8a80-53b7-3c06-a914-d9caf41d3543
-  weight: 1
-  level: Completed
-  failureMessage: |-
-    # About
-    This scorecard rule will walk you through learning JSON.
+  - title: Learned
+    expression: custom("learn-json") == "completed"
+    identifier: a4cd8a80-53b7-3c06-a914-d9caf41d3543
+    weight: 1
+    level: Completed
+    failureMessage: |-
+      # About
+      This scorecard rule will walk you through learning JSON.
 filter:
   kind: GENERIC
   types:
     include:
-    - service
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex

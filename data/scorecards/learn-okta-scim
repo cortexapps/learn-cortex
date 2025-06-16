@@ -14,37 +14,40 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Incomplete
-    rank: 1
-    color: "#FF9E9E"
-  - name: Completed
-    rank: 2
-    color: "#7CCB92"
+    - name: Incomplete
+      rank: 1
+      color: "#FF9E9E"
+    - name: Completed
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned
-  expression: ownership.allOwners().filter((member) => member.name.matchesIn("Larry David") and member.identityProviderSources.any(group=> group.source=="OKTA" and group.groupIdentifier == "Learn Cortex - Okta Team")).length > 0
-  weight: 1
-  level: Completed
-  failureMessage: |
-    # About
-    This scorecard rule will walk you through setting up SCIM for the [Okta integration](https://docs.cortex.io/docs/reference/integrations/okta) for Cortex.
+  - title: Learned
+    expression: ownership.allOwners().filter((member) => member.name.matchesIn("Larry David") and member.identityProviderSources.any(group=> group.source=="OKTA" and group.groupIdentifier == "Learn Cortex - Okta Team")).length > 0
+    weight: 1
+    level: Completed
+    failureMessage: |
+      # About
+      This scorecard rule will walk you through setting up SCIM for the [Okta integration](https://docs.cortex.io/docs/reference/integrations/okta) for Cortex.
 
-    # Pre-requisites
-    Complete the Learn Okta scorecard.
+      # Pre-requisites
+      Complete the Learn Okta scorecard.
 
-    # Set up
-    - Follow the directions for [Okta SCIM](https://docs.cortex.io/docs/walkthroughs/workspace-settings/configuring-sso/okta/okta-scim).
-    - Create an email account at proton.me.
-    - TODO: double check all the provisioning configs.
-    - Add a new user in Okta.  Use the email you just created.  Set the user's first name to Larry.  Set the user's last name to David.
-    - Check the Cortex Audit Logs.  You should see that this new user has been created.
+      # Set up
+      - Follow the directions for [Okta SCIM](https://docs.cortex.io/docs/walkthroughs/workspace-settings/configuring-sso/okta/okta-scim).
+      - Create an email account at proton.me.
+      - TODO: double check all the provisioning configs.
+      - Add a new user in Okta.  Use the email you just created.  Set the user's first name to Larry.  Set the user's last name to David.
+      - Check the Cortex Audit Logs.  You should see that this new user has been created.
 
-    # Gotchas
+      # Gotchas
 
-    # CQL Rule
-    The CQL rule for this rule verifies that there is a user with the name Larry David who is a member of the "Learn Cortex - Okta Team" and this team is an owner of the "Learn Cortex" entity.
+      # CQL Rule
+      The CQL rule for this rule verifies that there is a user with the name Larry David who is a member of the "Learn Cortex - Okta Team" and this team is an owner of the "Learn Cortex" entity.
 filter:
   kind: GENERIC
+  types:
+    include:
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex

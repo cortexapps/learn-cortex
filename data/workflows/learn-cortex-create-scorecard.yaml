@@ -135,7 +135,7 @@ actions:
 - name: Create or update file
   slug: create-or-update-file
   schema:
-    alias: cortex - prod
+    alias: cortex-prod
     repositoryName: cortexapps/learn-cortex
     commitMessage: "{{actions.scorecard-slug.outputs.result}}: {{actions.user-input.outputs.description}}"
     content: "{{{actions.http-request-2.outputs.body}}}"

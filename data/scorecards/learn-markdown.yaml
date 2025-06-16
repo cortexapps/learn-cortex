@@ -14,26 +14,26 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Unwritten
-    rank: 1
-    color: "#D7AC58"
-  - name: Complete
-    rank: 2
-    color: "#7CCB92"
+    - name: Unwritten
+      rank: 1
+      color: "#D7AC58"
+    - name: Complete
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned
-  expression: custom("learn-markdown") == "completed"
-  identifier: d4ca4092-2ea3-384c-84ab-1755fc808c9f
-  weight: 1
-  level: Complete
-  failureMessage: |-
-    # About
-    This scorecard rule will walk you through learning markdown.
+  - title: Learned
+    expression: custom("learn-markdown") == "completed"
+    identifier: d4ca4092-2ea3-384c-84ab-1755fc808c9f
+    weight: 1
+    level: Complete
+    failureMessage: |-
+      # About
+      This scorecard rule will walk you through learning markdown.
 filter:
   kind: GENERIC
   types:
     include:
-    - service
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex

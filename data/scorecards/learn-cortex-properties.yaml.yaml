@@ -1,7 +1,6 @@
 tag: learn-cortex-properties.yaml
 name: Learn cortex-properties.yaml
-description: "Cortex Learn series: Learn how to set up and use the cortex-properties.yaml\
-  \ for branch support!.  Author: \n"
+description: "Cortex Learn series: Learn how to set up and use the cortex-properties.yaml for branch support!.  Author: \n"
 draft: false
 notifications:
   enabled: false
@@ -14,61 +13,25 @@ evaluation:
 ladder:
   name: Default Ladder
   levels:
-  - name: Unwritten
-    rank: 1
-    color: "#D7AC58"
-  - name: Completed
-    rank: 2
-    color: "#7CCB92"
+    - name: Unwritten
+      rank: 1
+      color: "#D7AC58"
+    - name: Completed
+      rank: 2
+      color: "#7CCB92"
 rules:
-- title: Learned
-  description: "# About\nThis scorecard rule will walk you through setting up and\
-    \ testing multi-branch support in Cortex using the cortex-properties.yaml file.\n\
-    \n# Set up\nEnsure you have a functioning Github configuration and gitops enabled\
-    \ for entity type service. \n\n\n\n### Gotchas\n- The cortex-properties.yaml must\
-    \ be in the default branch. If it’s missing there, the configuration won't apply.\n\
-    - Changes in non-listed branches won’t be visible in Cortex.\n- You can manage\
-    \ the same entity across branches using the same x-cortex-tag. In this case, Cortex\
-    \ will reflect the entity as defined in the most recent commit across those branches.\n\
-    - Some customers track entities with different x-cortex-tags across multiple branches\
-    \ using the same directory and file names. While this works to distinguish entities\
-    \ in Cortex, it prevents GitOps-based auto-archiving from working as expected.\
-    \ Because Cortex sees these as the same file path across branches, it will archive\
-    \ the file in all branches if it’s removed from just one. To avoid this, customers\
-    \ should name the files differently or avoid using auto archiving. \n\n# Related\
-    \ Cortex Academy courses\nNone\n\n# Task\n\n- Add a cortex-properties.yaml file\
-    \ to the main branch with the following content:\n    ```\n    branches:\n   \
-    \   - main\n      - uat\n    ```\n![Example 1](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/GGu9WoD7/5a857857-44b0-428c-8456-c33429fb615c.jpg?v=69cefc407fbc72aacb4541508a6bc9c8)\n\
-    \n![Example 2](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/kpurD5Xn/3201963d-e348-4471-ae27-63f7494ccdec.jpg?v=978c695c1e74c795e0d7b78c5fae9790)\n\
-    \n\n- Add a basic cortex.yaml file to define a simple entity in your sandbox.\
-    \ Example:\n    ```\n    openapi: 3.0.1\n    info:\n      title: My Sandbox Service\n\
-    \      x-cortex-tag: my-sandbox-service\n      x-cortex-type: service\n    ```\n\
-    \n- Create a new branch named uat.\n    - In GitHub:\n        - Go to your repository\n\
-    \        - Select the `main` branch dropdown\n        - Type `uat` and select\
-    \ “Create branch: uat”\n    - Or in your terminal:\n        ```\n        git checkout\
-    \ -b uat\n        ```\n![Example 3](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/Wnu9xbLN/bc5a0dad-bd64-4efd-b903-e24a3ee9fe72.jpg?v=1dcf6620de8e9f77031aaaf6a55a3c1d)\n\
-    \n- In the `uat` branch, update the cortex.yaml to make this entity an incoming\
-    \ dependency for the `learn-cortex` entity. This will demonstrate the most recent\
-    \ commit being the source of truth:\n    ```\n    openapi: 3.0.1\n    info:\n\
-    \      title: My Sandbox Service\n      x-cortex-tag: my-sandbox-service\n   \
-    \   x-cortex-type: service\n      x-cortex-dependency:\n        - tag: learn-cortex\n\
-    \    ```\n\n- Commit and push your changes to the uat branch:\n    ```\n    git\
-    \ add cortex.yaml\n    git commit -m \"Add dependency block from uat branch\"\n\
-    \    git push origin uat\n    ```\n\n\n- Confirm that:\n  \n    - The commit to\
-    \ the entity in uat was picked up and your new entity is now an incoming dependency\
-    \ for the  learn-cortex entity and passing the rule. \n\n# Relevant documentation\n\
-    - [Using GitOps in a non-default branch](https://docs.cortex.io/settings/gitops#using-gitops-in-a-non-default-branch)\n"
-  expression: dependencies.in().length > 0
-  identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
-  weight: 1
-  level: Completed
-  failureMessage: "# About\nThis scorecard is checking that the incoming dependency\
-    \ is set to illustrate the most recent commit in the uat branch was successful.\
-    \ \n\n# Set up\nYou can read a little more about this here - [Using GitOps in\
-    \ a non-default branch](https://docs.cortex.io/settings/gitops#using-gitops-in-a-non-default-branch)\n\
-    \n"
+  - title: Learned
+    description: "# About\nThis scorecard rule will walk you through setting up and testing multi-branch support in Cortex using the cortex-properties.yaml file.\n\n# Set up\nEnsure you have a functioning Github configuration and gitops enabled for entity type service. \n\n\n\n### Gotchas\n- The cortex-properties.yaml must be in the default branch. If it’s missing there, the configuration won't apply.\n- Changes in non-listed branches won’t be visible in Cortex.\n- You can manage the same entity across branches using the same x-cortex-tag. In this case, Cortex will reflect the entity as defined in the most recent commit across those branches.\n- Some customers track entities with different x-cortex-tags across multiple branches using the same directory and file names. While this works to distinguish entities in Cortex, it prevents GitOps-based auto-archiving from working as expected. Because Cortex sees these as the same file path across branches, it will archive the file in all branches if it’s removed from just one. To avoid this, customers should name the files differently or avoid using auto archiving. \n\n# Related Cortex Academy courses\nNone\n\n# Task\n\n- Add a cortex-properties.yaml file to the main branch with the following content:\n    ```\n    branches:\n      - main\n      - uat\n    ```\n![Example 1](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/GGu9WoD7/5a857857-44b0-428c-8456-c33429fb615c.jpg?v=69cefc407fbc72aacb4541508a6bc9c8)\n\n![Example 2](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/kpurD5Xn/3201963d-e348-4471-ae27-63f7494ccdec.jpg?v=978c695c1e74c795e0d7b78c5fae9790)\n\n\n- Add a basic cortex.yaml file to define a simple entity in your sandbox. Example:\n    ```\n    openapi: 3.0.1\n    info:\n      title: My Sandbox Service\n      x-cortex-tag: my-sandbox-service\n      x-cortex-type: service\n    ```\n\n- Create a new branch named uat.\n    - In GitHub:\n        - Go to your repository\n        - Select the `main` branch dropdown\n        - Type `uat` and select “Create branch: uat”\n    - Or in your terminal:\n        ```\n        git checkout -b uat\n        ```\n![Example 3](https://p-a6fkm3vd.t3.n0.cdn.zight.com/items/Wnu9xbLN/bc5a0dad-bd64-4efd-b903-e24a3ee9fe72.jpg?v=1dcf6620de8e9f77031aaaf6a55a3c1d)\n\n- In the `uat` branch, update the cortex.yaml to make this entity an incoming dependency for the `learn-cortex` entity. This will demonstrate the most recent commit being the source of truth:\n    ```\n    openapi: 3.0.1\n    info:\n      title: My Sandbox Service\n      x-cortex-tag: my-sandbox-service\n      x-cortex-type: service\n      x-cortex-dependency:\n        - tag: learn-cortex\n    ```\n\n- Commit and push your changes to the uat branch:\n    ```\n    git add cortex.yaml\n    git commit -m \"Add dependency block from uat branch\"\n    git push origin uat\n    ```\n\n\n- Confirm that:\n  \n    - The commit to the entity in uat was picked up and your new entity is now an incoming dependency for the  learn-cortex entity and passing the rule. \n\n# Relevant documentation\n- [Using GitOps in a non-default branch](https://docs.cortex.io/settings/gitops#using-gitops-in-a-non-default-branch)\n"
+    expression: dependencies.in().length > 0
+    identifier: 921bc595-5a12-3aa1-af45-e17d17e0d649
+    weight: 1
+    level: Completed
+    failureMessage: "# About\nThis scorecard is checking that the incoming dependency is set to illustrate the most recent commit in the uat branch was successful. \n\n# Set up\nYou can read a little more about this here - [Using GitOps in a non-default branch](https://docs.cortex.io/settings/gitops#using-gitops-in-a-non-default-branch)\n\n"
 filter:
   kind: GENERIC
+  types:
+    include:
+      - service
   groups:
     include:
-    - learn-cortex
+      - learn-cortex
