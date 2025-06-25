@@ -62,6 +62,12 @@ the directions listed below.
     export CORTEX_EMAIL=joe@example.com
     ```
 
+- Create a Github personal access token following the steps in https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens, and then set environment variable GH_PAT with the token value
+
+    ```
+    export GH_PAT=<your personal access token>
+    ```
+
 - Navigate to the newly-cloned learn-cortex folder and run just setup
 
     ```
