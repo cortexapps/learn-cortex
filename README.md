@@ -107,3 +107,13 @@ There are several workflows that will be available from the Learn Cortex entity:
 
     Install a Learn Cortex scorecard from the learn-cortex repository.  This allows you to add new content using a workflow.
     Alternatively, you can run update your git checkout and run 'just'.
+
+
+### **Additional setup needed to run these workflows:**
+- Setup Cortex Github integration: https://docs.cortex.io/ingesting-data-into-cortex/integrations/github
+    - make sure to name github configuration "cortex-prod" (this name is referenced in the "Alias" value in the workflow Github requests)
+ 
+- Create new Cortex API key with "User" role: https://docs.cortex.io/settings/api-keys
+    - add this Cortex API key as a new secret named "cortex_api_key": https://docs.cortex.io/settings/api-keys/secrets (this name is referenced in the "Authorization" header of the workflow Cortex API requests)
+      
+
