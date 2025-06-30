@@ -4,7 +4,7 @@ Repository for setting up test entities and learning how to use Cortex.
 We're just kicking the tires on this and have limited content, but if you want to give it try please follow
 the directions listed below.
 
-# Pre-requistites
+# Pre-requisites
 - A Cortex instance.
 - The Command prompt (on a Mac: Finder -> Applications -> Utilities -> Terminal)
 - a folder on your computer to clone the learn-cortex repository to
