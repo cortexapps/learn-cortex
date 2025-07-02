@@ -111,6 +111,7 @@ There are several workflows that will be available from the Learn Cortex entity:
 
 ### **Additional setup needed to run these workflows:**
 - Setup Cortex Github integration: https://docs.cortex.io/ingesting-data-into-cortex/integrations/github
+    - note: this should already be handled by running the previous command ```just setup```
     - make sure to name github configuration "cortex-prod" (this name is referenced in the "Alias" value in the workflow Github requests)
  
 - Create new Cortex API key with "User" role: https://docs.cortex.io/settings/api-keys
