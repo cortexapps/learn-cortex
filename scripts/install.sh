@@ -30,4 +30,4 @@ echo "All set!"
 
 echo ""
 
-echo "Run 'just' to see list of recipes that can be run."
+echo "Run 'cd ~/git/learn-cortex/; just' to see list of recipes that can be run."
