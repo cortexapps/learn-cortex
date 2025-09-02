@@ -5,80 +5,17 @@ We're just kicking the tires on this and have limited content, but if you want t
 the directions listed below.
 
 # Pre-requisites
-- A Cortex instance.
-- The Command prompt (on a Mac: Finder -> Applications -> Utilities -> Terminal)
-- a folder on your computer to clone the learn-cortex repository to
-- [Homebrew](https://brew.sh/) installed
-    
-    **TL;DR**
-
-    This command will install homebrew if you don't already have it installed.
-    ```
-    which brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
-
+- A Cortex workspace and a Cortex [Personal token](https://docs.cortex.io/configure/settings/api-keys/personal-tokens).
 
 # Installation
-- If needed, create a folder on your computer to store repositories (such as ~/Repos)
-  
-    ```
-    mkdir ~/Repos
-    ```
-- Install git
-
-    ```
-    brew install git
-    ```
-
-- Navigate to your repository folder, and clone the learn-cortex repository
-
-    ```
-    cd ~/Repos
-    git clone https://github.com/cortexapps/learn-cortex.git
-    ```
-
-- This repository uses [just](https://github.com/casey/just) to run the set up tasks
-
-    ```
-    brew install just
-    ```
-
-- install the cortex CLI (required to setup Justfile)
-
-    ```
-    brew tap cortexapps/tap
-    brew install cortexapps-cli
-    ```
-
-- Create a Cortex personal token following the steps in https://docs.cortex.io/docs/walkthroughs/workspace-settings/personal-tokens, and then set environment variable CORTEX_API_KEY with the token value
-
-    ```
-    export CORTEX_API_KEY=<your personal token>
-    ```
-
-- set environment variable CORTEX_EMAIL with email that will be used as the owner of the Learn Cortex entity
-
-    ```
-    export CORTEX_EMAIL=joe@example.com
-    ```
-
-- Create a Github personal access token following the steps in https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens, and then set environment variable GH_PAT with the token value
-
-    ```
-    export GH_PAT=<your personal access token>
-    ```
-
-- Navigate to the newly-cloned learn-cortex folder and run just setup
-
-    ```
-    cd learn-cortex
-    just setup
-    ```
-
-
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/cortexapps/learn-cortex/HEAD/scripts/install.sh)"
+```
 
 # The Learn Cortex entity
-You will now have an entity named Learn Cortex in your catalog. 
+Run `just setup` to add Learn Cortex entities to your Cortex workspace. 
+
+You will now have an entity named `Learn Cortex` in your catalog. 
 
 ![image](./img/learn-cortex-entity.png)
 
